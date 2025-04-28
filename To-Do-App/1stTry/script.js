@@ -1,72 +1,58 @@
-// Wait for the entire DOM to load before executing anything
 document.addEventListener('DOMContentLoaded', () => {
-    
-    // Get references to DOM elements
     const todoInput = document.getElementById('todo-input');
     const addTaskBtn = document.getElementById('add-task-btn');
     const todoList = document.getElementById('todo-list');
 
-    // Load tasks from localStorage or initialize with an empty array
     let tasks = JSON.parse(localStorage.getItem('tasks')) || [];
 
-    // Render each saved task from localStorage when the page loads
     tasks.forEach(task => renderTask(task));
 
-    // Add a new task when the button is clicked
     addTaskBtn.addEventListener('click', () => {
-        const taskText = todoInput.value.trim(); // Get input text and trim whitespace
-        if (taskText === "") return; // Do nothing if input is empty
+        const taskText = todoInput.value.trim();
+        if (taskText === "") return;
 
-        // Create a new task object
         const newTask = {
-            id: Date.now(),      // Unique ID using current timestamp
-            text: taskText,      // Task content
-            completed: false     // Task is not completed initially
+            id: Date.now(),
+            text: taskText,
+            completed: false
         };
 
-        tasks.push(newTask);      // Add to tasks array
-        saveTask();               // Save updated tasks to localStorage
-        renderTask(newTask);      // Display it in the DOM
-        todoInput.value = "";     // Clear input field
-        console.log(tasks);       // Log current tasks array for debugging
+        tasks.push(newTask);
+        saveTask();
+        renderTask(newTask);
+        todoInput.value = "";
+        console.log(tasks);
     });
 
-    // Function to render a single task in the UI
     function renderTask(task) {
-        const li = document.createElement('li');             // Create a <li> element
-        li.setAttribute('data-id', task.id);                 // Store task id in a custom attribute
+        const li = document.createElement('li');
+        li.setAttribute('data-id', task.id);
 
-        // Add a class if the task is already completed
         if (task.completed) li.classList.add("completed");
 
-        // Set the inner HTML of the <li>
         li.innerHTML = `
             <span>${task.text}</span>
             <button>Delete</button>
         `;
 
-        // Toggle "completed" state when clicking the list item (excluding the delete button)
         li.addEventListener('click', (e) => {
-            if (e.target.tagName === 'BUTTON') return;        // Ignore if the clicked target is the delete button
-            task.completed = !task.completed;                 // Toggle completed status
-            li.classList.toggle('completed');                 // Toggle CSS class
-            saveTask();                                       // Save updated status
+            if (e.target.tagName === 'BUTTON') return;
+            task.completed = !task.completed;
+            li.classList.toggle('completed');
+            saveTask();
         });
 
-        // Delete task when delete button is clicked
         li.querySelector('button').addEventListener('click', (e) => {
-            e.stopPropagation();                              // Prevent triggering the parent click handler
-            tasks = tasks.filter(t => t.id !== task.id);      // Remove task from array
-            li.remove();                                      // Remove element from DOM
-            saveTask();                                       // Save updated tasks list
+            e.stopPropagation();
+            tasks = tasks.filter(t => t.id !== task.id);
+            li.remove();
+            saveTask();
         });
 
-        todoList.appendChild(li);                             // Append the new <li> to the task list
+        todoList.appendChild(li);
     }
 
-    // Save the current state of tasks to localStorage
     function saveTask() {
         localStorage.setItem('tasks', JSON.stringify(tasks));
     }
-
 });
