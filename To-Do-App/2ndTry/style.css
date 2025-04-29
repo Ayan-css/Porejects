@@ -92,4 +92,9 @@
   li button:hover {
     background-color: #b71c1c;
   }
-  
+  .completed span {
+    text-decoration: line-through;
+    color: green;
+    font-style: italic;
+    font-weight: bold;
+  }
