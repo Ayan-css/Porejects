@@ -81,3 +81,19 @@
   .hidden {
     display: none;
   }
+
+  .remove-btn {
+    background-color: #e53935;
+    border: none;
+    padding: 5px 10px;
+    color: #fff;
+    margin: 2px;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-left: 10px;
+  }
+  
+  .remove-btn:hover {
+    background-color: #c62828;
+  }
+  
