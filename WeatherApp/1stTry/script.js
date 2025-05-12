@@ -6,7 +6,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const temperatureDisplay = document.getElementById("temperature");
   const descriptionDisplay = document.getElementById("description");
   const ErrorDisplay = document.getElementById("error-message");
-  const API_KEY = "715c0a5a0b344116774a56d24150777a"; // ENV variable
+  const API_KEY = "715c0a5a0b344116774va56d24150777a"; // ENV variable., se your own key to use
   // while requsting from other server it can throw some error
   // server/database is always in another continent
 
